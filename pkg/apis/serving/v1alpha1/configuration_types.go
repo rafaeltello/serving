@@ -59,6 +59,9 @@ var (
 
 	// Check that we can create OwnerReferences to a Configuration.
 	_ kmeta.OwnerRefable = (*Configuration)(nil)
+
+	// Check that the type conforms to the duck Knative Resource shape.
+	_ duckv1.KRShaped = (*Configuration)(nil)
 )
 
 // ConfigurationSpec holds the desired state of the Configuration (from the client).
@@ -119,6 +122,15 @@ type ConfigurationStatus struct {
 	duckv1.Status `json:",inline"`
 
 	ConfigurationStatusFields `json:",inline"`
+}
+
+// GetStatus retrieves the duck Status for the Configuration.
+func (c *Configuration) GetStatus() *duckv1.Status {
+	return &c.Status.Status
+}
+
+func (c *Configuration) GetConditionSet() apis.ConditionSet {
+	return c.GetConditionSet()
 }
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object

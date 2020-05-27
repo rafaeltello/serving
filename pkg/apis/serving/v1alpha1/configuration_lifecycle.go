@@ -71,6 +71,10 @@ func (cs *ConfigurationStatus) GetCondition(t apis.ConditionType) *apis.Conditio
 	return confCondSet.Manage(cs).GetCondition(t)
 }
 
+func (cs *ConfigurationStatus) GetConditionSet() apis.ConditionSet {
+	return confCondSet
+}
+
 func (cs *ConfigurationStatus) InitializeConditions() {
 	confCondSet.Manage(cs).InitializeConditions()
 }
